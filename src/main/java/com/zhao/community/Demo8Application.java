@@ -1,4 +1,4 @@
-package com.zhao.demo8;
+package com.zhao.community;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
