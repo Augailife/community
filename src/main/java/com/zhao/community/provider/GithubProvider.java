@@ -21,7 +21,7 @@ public String getAccessToken(AccessTokenDTO accessTokenDTO){
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
-            String token=string.split("&")[0].split("=")[1];
+            String token=string.split("&")[0].split("=")[1];//先按照&符号分割一次，分割后得到数组取第一个后再按照=号分割一次取第二个。
             return token;
     } catch (Exception e) {
             e.printStackTrace();
@@ -37,8 +37,7 @@ public GithubUser getUser(String accessToken){
     try {
         Response response = client.newCall(request).execute();
         String s= response.body().string();
-        System.out.println(s);
-        GithubUser githubUser = JSON.parseObject(s, GithubUser.class);
+        GithubUser githubUser = JSON.parseObject(s, GithubUser.class);//返回json字符串，找到同名信息后注入GithubUser对象
         return githubUser;
     } catch (IOException e) {
         e.printStackTrace();
