@@ -1,9 +1,9 @@
-package com.zhao.community.model;
+package com.zhao.community.dto;
 
 import lombok.Data;
 
 @Data
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String buchong;
@@ -14,6 +14,5 @@ public class Question {
     private Integer viewCount;
     private Integer likeCount;
     private Integer commentCount;
-
-
+    private String touXiang;
 }

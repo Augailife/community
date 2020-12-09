@@ -48,8 +48,9 @@ public class OauthController {
             user.setName(githubUser.getName());
             String token = UUID.randomUUID().toString();
             user.setToken(token);//使用UUID随机生成一个16位的不重复的令牌
-            user.setGmtCreat(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreat());
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            user.setTouXiang(githubUser.getAvatar_url());
             userMapper.insert(user);//以上将获取到的gitHub用户信息封装，并放入数据库中
             httpServletResponse.addCookie(new Cookie("token",token));//将随机生成的令牌放入cookie中去
 
