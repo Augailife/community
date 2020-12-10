@@ -14,6 +14,6 @@ public interface UserMapper {
     void insert(User user);
     @Select("select * from user where token=#{token}")//如果注解下面是一个自定义对象可以直接获取，如果是一个值则需要使用@Param注解解释一下
     User findByToken(@Param("token") String token);
-    @Select("select * from user where account_id=#{accountId}")
-    User findByAccountId(@Param("accountId") Integer accountId);
+    @Select("select * from user where id=#{id}")
+    User findByAccountId(@Param("id") Integer id);
 }

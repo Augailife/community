@@ -51,16 +51,17 @@
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true">发现</span></h2>
             <hr/>
-            <div class="media">
+            <div class="media" th:each="question:${questionList}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded" src="https://avatars1.githubusercontent.com/u/67962616?v=4" alt="...">
+                        <img class="media-object img-rounded" th:src="${question.user.touXiang}" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">index问题列表功能</h4>
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
                     <span class="text-desc">
-                    • 1 人关注 • 0 个回复 • 4 次浏览 • 29 分钟前
+                        <span th:text="${question.commentCount}"></span>个回复<span th:text="${question.viewCount}"></span>次浏览
+                        <span th:text="${#dates.format(question.gmtCreate,'dd MMMM yyyy')}"></span>
                     </span>
 
                 </div>

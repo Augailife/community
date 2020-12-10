@@ -73,7 +73,7 @@ public class PublishController {
                question.setBuchong(buchong);
                question.setGmtCreate(System.currentTimeMillis());
                question.setGmtModified(question.getGmtCreate());
-               question.setCreator(Integer.parseInt(user.getAccountId()));
+               question.setCreator(user.getId());
                questionMapper.Insert(question);
             }
 

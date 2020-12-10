@@ -27,7 +27,7 @@ public class QuestionService {
             User user = userMapper.findByAccountId(question.getCreator());
             QuestionDTO questionDTO=new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);//使用BeanUtils工具将question注入questionDTO中；
-            questionDTO.setTouXiang(user.getTouXiang());
+            questionDTO.setUser(user);//写javabean对象时，尽量往大里写。
             questionDTOS.add(questionDTO);
         }
         return questionDTOS;
