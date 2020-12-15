@@ -15,18 +15,21 @@ public class PageDTO {
     private List<Integer> pages=new ArrayList<>();
     private Integer totalPage;
 
-    public void fenYe(Integer page, Integer size, Integer count) {
-        this.page=page;
-        if(count%page==0){
-            totalPage=count/size+1;
-        }else{
+    public void fenYe(Integer pagea, Integer size, Integer count) {
+        page=pagea;
+            if(count%size==0){
             totalPage=count/size;
+        }else{
+            totalPage=count/size+1;
+        }
+        if(count<5){
+            totalPage=1;
         }
         if(page<1){
             page=1;
         }
 
-        if(page>totalPage){
+        if(page>=totalPage){
             page=totalPage;
         }
 
