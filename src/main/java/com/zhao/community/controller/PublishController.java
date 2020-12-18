@@ -44,7 +44,7 @@ public class PublishController {
             model.addAttribute("error","标签不能为空");
             return "publish";
         }
-        User user=(User)servletRequest.getAttribute("user");
+        User user=(User)servletRequest.getSession().getAttribute("user");
         if(user==null){
             return "redirect:/";
         }

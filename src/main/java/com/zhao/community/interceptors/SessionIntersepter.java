@@ -28,7 +28,6 @@ public class SessionIntersepter implements HandlerInterceptor {
                     break;
                 }
             }
-
         return true;
     }
 

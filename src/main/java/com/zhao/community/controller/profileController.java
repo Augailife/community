@@ -32,7 +32,7 @@ public class profileController {
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","我的回复");
         }
-        User user=(User)servletRequest.getAttribute("user");
+        User user=(User)servletRequest.getSession().getAttribute("user");
         if(user==null){
             return "redirect:/";
         }
