@@ -25,6 +25,10 @@
                     发布时间: <span th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                     </span>
             <hr/>
+            <span th:text="${questionDTO.buchong}"></span>
+            <hr/>
+            <a class="community-menu" th:href="@{'/publish/'+${questionDTO.id}}" th:if="${session.user!=null&&session.user.id==questionDTO.creator}">
+                <span class="glyphicon glyphicon-pencil"></span>编辑</a>
 
 
         </div>
@@ -32,7 +36,18 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <h4>发起人</h4>
 <!--            在这里是容器中套容器，表示在上面的全局容器的三份之下叠两个小容器，都占上面那个容器（包住他们的容器）的全部-->
+            <div class="media">
+                <div class="media-left">
+                    <span href="#">
+                        <img class="media-object img-circle" th:src="${questionDTO.user.touXiang}" alt="...">
+                    </span>
+                </div>
+                <div class="media-body">
+                    <h5><span th:text="${questionDTO.user.name}"></span></h5>
+                </div>
+            </div>
         </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <h4>相关问题</h4>
         </div>

@@ -5,6 +5,7 @@ import com.zhao.community.dto.GithubUser;
 import com.zhao.community.mapper.UserMapper;
 import com.zhao.community.model.User;
 import com.zhao.community.provider.GithubProvider;
+import com.zhao.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class OauthController {
     private  String redirectUri;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code") String code,
@@ -48,10 +51,8 @@ public class OauthController {
             user.setName(githubUser.getName());
             String token = UUID.randomUUID().toString();
             user.setToken(token);//使用UUID随机生成一个16位的不重复的令牌
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setTouXiang(githubUser.getAvatar_url());
-            userMapper.insert(user);//以上将获取到的gitHub用户信息封装，并放入数据库中
+            userService.findByAccountId(user);
             httpServletResponse.addCookie(new Cookie("token",token));//将随机生成的令牌放入cookie中去
 
 //            httpServletRequest.getSession().setAttribute("user", githubUser);//将用户信息存入session域中
@@ -59,6 +60,19 @@ public class OauthController {
 //            因为redirect是重定向，后面应该写正规的地址栏地址，在此处和web时不同，web重定向是将/发送给浏览器解析，会解析到项目路径
 //            在此处是直接用服务器解析，会解析到项目路径（封装了一下）
         }
+        return "redirect:/";
+    }
+    @GetMapping("/lobout")
+    public String logout(
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse
+    ){
+//        删除cookie和Session
+        httpServletRequest.getSession().removeAttribute("user");
+        Cookie cookie=new Cookie("token", null);
+        cookie.setMaxAge(0);
+        httpServletResponse.addCookie(cookie);
+
         return "redirect:/";
     }
 }
