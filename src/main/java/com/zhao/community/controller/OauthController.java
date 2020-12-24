@@ -62,7 +62,7 @@ public class OauthController {
         }
         return "redirect:/";
     }
-    @GetMapping("/lobout")
+    @GetMapping("/logout")
     public String logout(
             HttpServletRequest httpServletRequest,
             HttpServletResponse httpServletResponse
@@ -72,6 +72,7 @@ public class OauthController {
         Cookie cookie=new Cookie("token", null);
         cookie.setMaxAge(0);
         httpServletResponse.addCookie(cookie);
+
 
         return "redirect:/";
     }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,18 @@ public class PublishController {
 
     @Autowired
     QuestionMapper questionMapper;
+    @GetMapping("/publish/{id}")
+    public String edit(
+            @PathVariable(value = "id") Integer id,
+            Model model
+    ){
+        Question question = questionMapper.getById(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("buchong",question.getBuchong());
+        model.addAttribute("tag",question.getTag());
+        model.addAttribute("id",question.getId());
+        return "publish";
+    }
     @GetMapping("/publish")
     public String publish(){
 
@@ -26,6 +39,7 @@ public class PublishController {
             @RequestParam(value = "title",required = false) String title,
             @RequestParam(value = "buchong",required = false) String buchong,
             @RequestParam(value = "tag",required = false) String tag,
+            @RequestParam(value = "id",required = false) Integer id,
             HttpServletRequest servletRequest,
             Model model
     ){
@@ -54,18 +68,26 @@ public class PublishController {
                 return "publish";
             }
             else{
-               Question question=new Question();
-               question.setTitle(title);
-               question.setTag(tag);
-               question.setBuchong(buchong);
-               question.setGmtCreate(System.currentTimeMillis());
-               question.setGmtModified(question.getGmtCreate());
-               question.setCreator(user.getId());
-               questionMapper.Insert(question);
-            }
+                if(id==null) {
+                    Question question = new Question();
+                    question.setTitle(title);
+                    question.setTag(tag);
+                    question.setBuchong(buchong);
+                    question.setGmtCreate(System.currentTimeMillis());
+                    question.setGmtModified(question.getGmtCreate());
+                    question.setCreator(user.getId());
+                    questionMapper.Insert(question);
+                    return "redirect:/";
+                }else{
+                    Question question = new Question();
+                    question.setId(id);
+                    question.setTitle(title);
+                    question.setTag(tag);
+                    question.setBuchong(buchong);
+                    question.setGmtModified(question.getGmtCreate());
+                    questionMapper.updateQuestion(question);
+                    return "redirect:/profile/questions";
+                }}
 
-
-
-        return "redirect:/";
     }
 }
