@@ -2,8 +2,11 @@ package com.zhao.community.service;
 
 import com.zhao.community.mapper.UserMapper;
 import com.zhao.community.model.User;
+import com.zhao.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class UserService {
@@ -11,20 +14,28 @@ public class UserService {
     UserMapper userMapper;
 
     public void findByAccountId(User user){
-        User dbuser=new User();
-        dbuser=userMapper.findByAccountId(user.getAccountId());
-        if(dbuser==null){
+        UserExample userExample = new UserExample();
+        userExample.createCriteria()
+                .andAccountIdEqualTo(user.getAccountId());
+        List<User> users = userMapper.selectByExample(userExample);
+
+        if(users.size()==0){
 //            添加
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
         }else{
 //            更新
-            dbuser.setName(user.getName());
-            dbuser.setTouXiang(user.getTouXiang());
-            dbuser.setToken(user.getToken());
-            dbuser.setGmtModified(System.currentTimeMillis());
-            userMapper.update(dbuser);
+            User dbuser = users.get(0);
+            User updateUser = new User();
+            updateUser.setName(user.getName());
+            updateUser.setTouxiang(user.getTouxiang());
+            updateUser.setToken(user.getToken());
+            updateUser.setGmtModified(System.currentTimeMillis());
+            UserExample userExample1 = new UserExample();
+            userExample1.createCriteria()
+                    .andIdEqualTo(dbuser.getId());
+            userMapper.updateByExample(updateUser,userExample1);
         }
     }
 

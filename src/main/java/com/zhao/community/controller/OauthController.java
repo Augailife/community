@@ -51,7 +51,7 @@ public class OauthController {
             user.setName(githubUser.getName());
             String token = UUID.randomUUID().toString();
             user.setToken(token);//使用UUID随机生成一个16位的不重复的令牌
-            user.setTouXiang(githubUser.getAvatar_url());
+            user.setTouxiang(githubUser.getAvatar_url());
             userService.findByAccountId(user);
             httpServletResponse.addCookie(new Cookie("token",token));//将随机生成的令牌放入cookie中去
 

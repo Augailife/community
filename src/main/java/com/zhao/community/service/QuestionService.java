@@ -33,7 +33,7 @@ public class QuestionService {
         List<Question> questions=questionMapper.list(startpage,size);
 
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO=new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);//使用BeanUtils工具将question注入questionDTO中；
             questionDTO.setUser(user);//写javabean对象时，尽量往大里写。
@@ -55,7 +55,7 @@ public class QuestionService {
         List<Question> questions=questionMapper.listByUserId(userId,startpage,size);
 
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO=new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);//使用BeanUtils工具将question注入questionDTO中；
             questionDTO.setUser(user);//写javabean对象时，尽量往大里写。
@@ -70,7 +70,7 @@ public class QuestionService {
         Question question=questionMapper.getById(id);
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
-        User user=userMapper.findById(question.getCreator());
+        User user=userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
