@@ -2,6 +2,7 @@ package com.zhao.community.controller;
 
 import com.zhao.community.mapper.QuestionMapper;
 import com.zhao.community.model.Question;
+import com.zhao.community.model.QuestionExample;
 import com.zhao.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class PublishController {
             @PathVariable(value = "id") Integer id,
             Model model
     ){
-        Question question = questionMapper.getById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         model.addAttribute("title",question.getTitle());
         model.addAttribute("buchong",question.getBuchong());
         model.addAttribute("tag",question.getTag());
@@ -76,7 +77,7 @@ public class PublishController {
                     question.setGmtCreate(System.currentTimeMillis());
                     question.setGmtModified(question.getGmtCreate());
                     question.setCreator(user.getId());
-                    questionMapper.Insert(question);
+                    questionMapper.insert(question);
                     return "redirect:/";
                 }else{
                     Question question = new Question();
@@ -84,8 +85,12 @@ public class PublishController {
                     question.setTitle(title);
                     question.setTag(tag);
                     question.setBuchong(buchong);
-                    question.setGmtModified(question.getGmtCreate());
-                    questionMapper.updateQuestion(question);
+                    question.setCreator(user.getId());
+                    question.setGmtModified(System.currentTimeMillis());
+                    QuestionExample questionExample = new QuestionExample();
+                    questionExample.createCriteria()
+                            .andIdEqualTo(question.getId());
+                    questionMapper.updateByExample(question,questionExample);
                     return "redirect:/profile/questions";
                 }}
 

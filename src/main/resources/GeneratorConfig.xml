@@ -7,6 +7,7 @@
 
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/community?serverTimezone=GMT%2B8"
                         userId="root"
@@ -35,6 +36,8 @@
         <table tableName="user" domainObjectName="User" >
             <property name="useActualColumnNames" value="false"/>
         </table>
-
+        <table tableName="question" domainObjectName="Question" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>

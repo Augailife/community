@@ -5,7 +5,9 @@ import com.zhao.community.dto.QuestionDTO;
 import com.zhao.community.mapper.QuestionMapper;
 import com.zhao.community.mapper.UserMapper;
 import com.zhao.community.model.Question;
+import com.zhao.community.model.QuestionExample;
 import com.zhao.community.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,12 +27,14 @@ public class QuestionService {
     public PageDTO list(Integer page,Integer size){
         PageDTO pageDTO=new PageDTO();
         List<QuestionDTO> questionDTOS=new ArrayList<>();
-        Integer count = questionMapper.count();
+        QuestionExample questionExample = new QuestionExample();
+
+        Integer count =(int) questionMapper.countByExample(questionExample);
         pageDTO.fenYe(page,size,count);
 
         Integer startpage=(page-1)*size;
 
-        List<Question> questions=questionMapper.list(startpage,size);
+        List<Question> questions=questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(startpage,size));
 
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -48,11 +52,12 @@ public class QuestionService {
     public PageDTO list(Integer userId, Integer page, Integer size) {
         PageDTO pageDTO=new PageDTO();
         List<QuestionDTO> questionDTOS=new ArrayList<>();
-        Integer count = questionMapper.countByUserId(userId);
+        QuestionExample questionExample = new QuestionExample();
+        Integer count = (int)questionMapper.countByExample(questionExample);
         pageDTO.fenYe(page,size,count);
         Integer startpage=(page-1)*size;
 
-        List<Question> questions=questionMapper.listByUserId(userId,startpage,size);
+        List<Question> questions=questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(startpage,size));
 
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -67,7 +72,7 @@ public class QuestionService {
     }
 
     public QuestionDTO getById(Integer id) {
-        Question question=questionMapper.getById(id);
+        Question question=questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user=userMapper.selectByPrimaryKey(question.getCreator());
