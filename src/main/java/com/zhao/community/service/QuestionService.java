@@ -2,6 +2,8 @@ package com.zhao.community.service;
 
 import com.zhao.community.dto.PageDTO;
 import com.zhao.community.dto.QuestionDTO;
+import com.zhao.community.exception.CustomizeErrorCode;
+import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.mapper.QuestionMapper;
 import com.zhao.community.mapper.UserMapper;
 import com.zhao.community.model.Question;
@@ -73,6 +75,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question=questionMapper.selectByPrimaryKey(id);
+        if(question==null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user=userMapper.selectByPrimaryKey(question.getCreator());

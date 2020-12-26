@@ -1,5 +1,7 @@
 package com.zhao.community.controller;
 
+import com.zhao.community.exception.CustomizeErrorCode;
+import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.mapper.QuestionMapper;
 import com.zhao.community.model.Question;
 import com.zhao.community.model.QuestionExample;
@@ -85,12 +87,14 @@ public class PublishController {
                     question.setTitle(title);
                     question.setTag(tag);
                     question.setBuchong(buchong);
-                    question.setCreator(user.getId());
                     question.setGmtModified(System.currentTimeMillis());
                     QuestionExample questionExample = new QuestionExample();
                     questionExample.createCriteria()
                             .andIdEqualTo(question.getId());
-                    questionMapper.updateByExample(question,questionExample);
+                    int update=questionMapper.updateByExampleSelective(question,questionExample);
+                    if(update != 1){
+                        throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+                    }
                     return "redirect:/profile/questions";
                 }}
 
