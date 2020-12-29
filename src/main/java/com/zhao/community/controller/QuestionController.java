@@ -20,6 +20,7 @@ public class QuestionController {
             @PathVariable("id") Integer id,
             Model model
     ){
+        questionService.calView(id);
         QuestionDTO questionDTO=questionService.getById(id);
         model.addAttribute("questionDTO",questionDTO);
         return "question";

@@ -4,6 +4,7 @@ import com.zhao.community.dto.PageDTO;
 import com.zhao.community.dto.QuestionDTO;
 import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.exception.CustomizeException;
+import com.zhao.community.mapper.QuestionExtMapper;
 import com.zhao.community.mapper.QuestionMapper;
 import com.zhao.community.mapper.UserMapper;
 import com.zhao.community.model.Question;
@@ -21,6 +22,8 @@ import java.util.List;
 @Service
 @Component
 public class QuestionService {
+    @Autowired
+    QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -83,5 +86,12 @@ public class QuestionService {
         User user=userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
+    }
+
+    public void calView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
