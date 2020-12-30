@@ -35,7 +35,7 @@ public class UserService {
             UserExample userExample1 = new UserExample();
             userExample1.createCriteria()
                     .andIdEqualTo(dbuser.getId());
-            userMapper.updateByExample(updateUser,userExample1);
+            userMapper.updateByExampleSelective(updateUser,userExample1);
         }
     }
 

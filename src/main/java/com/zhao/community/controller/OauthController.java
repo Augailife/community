@@ -28,8 +28,6 @@ public class OauthController {
     @Value("${github.redirect.url}")
     private  String redirectUri;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     UserService userService;
 
     @GetMapping("/callback")
