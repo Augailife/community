@@ -1,16 +1,27 @@
 package com.zhao.community.exception;
 
 public enum CustomizeErrorCode implements ICustomizeErrorCode{
-    QUESTION_NOT_FOUND("您访问的路径跑丢了呢，换个路径试试吧~~");
-    private String message;
+    QUESTION_NOT_FOUND(2001,"您访问的路径跑丢了呢，换个路径试试吧~~"),
+    PARENTCOMMENT_NOT_FOUND(2002,"没有选中评论，无法回复"),
+    LOGIN_NOT(2003,"当前操作需要先进行登录哦~~");
 
-    CustomizeErrorCode(String message) {
+    private String message;
+    private Integer code;
+
+    CustomizeErrorCode(Integer code, String message) {
+//        在传参时会利用上面的参数注入，所以顺序不能错。
         this.message = message;
+        this.code = code;
     }
 
     @Override
     public String getMessage() {
         return this.message;
+    }
+
+    @Override
+    public Integer getCode() {
+        return code;
     }
     //使用构造方法+属性+get方法可以在以后调用此类的对象传入枚举值来查看
 }

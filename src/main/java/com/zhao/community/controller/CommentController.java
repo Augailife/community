@@ -2,6 +2,7 @@ package com.zhao.community.controller;
 
 import com.zhao.community.dto.CommentDTO;
 import com.zhao.community.dto.ResultDTO;
+import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.mapper.CommentMapper;
 import com.zhao.community.model.Comment;
 import com.zhao.community.model.User;
@@ -26,7 +27,7 @@ public Object post(@RequestBody CommentDTO commentDTO,
                    HttpServletRequest httpServletRequest){
         User user=(User) httpServletRequest.getSession().getAttribute("user");
         if(user==null){
-            return ResultDTO.errorOf(2001, "用户未登录，不能进行评论");
+            return ResultDTO.errorOf(CustomizeErrorCode.LOGIN_NOT);
         }
         Comment comment=new Comment();
         comment.setCommentator(1);
