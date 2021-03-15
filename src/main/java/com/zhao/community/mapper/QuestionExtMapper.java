@@ -1,5 +1,6 @@
 package com.zhao.community.mapper;
 
+import com.zhao.community.model.Comment;
 import com.zhao.community.model.Question;
 import com.zhao.community.model.QuestionExample;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,4 +14,5 @@ import java.util.List;
 @Component
 public interface QuestionExtMapper {
     int incView(Question record);
+    int incComment(Question commentCount);
 }

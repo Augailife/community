@@ -6,6 +6,7 @@ import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.mapper.CommentMapper;
 import com.zhao.community.model.Comment;
 import com.zhao.community.model.User;
+import com.zhao.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 @Controller
 public class CommentController {
     @Autowired
-    CommentMapper commentMapper;
+    CommentService commentServicer;
 
     @ResponseBody
     @RequestMapping(value ="/comment",method = RequestMethod.POST)
@@ -37,10 +38,9 @@ public Object post(@RequestBody CommentDTO commentDTO,
         comment.setCommentator(user.getId());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        commentMapper.insert(comment);
-
-        HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
-        objectObjectHashMap.put("message", "成功");
-        return objectObjectHashMap;
+        commentServicer.insert(comment);
+//        HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
+//        objectObjectHashMap.put("message", "成功");
+        return ResultDTO.okOf();
 }
 }
