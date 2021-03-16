@@ -11,6 +11,8 @@ import com.zhao.community.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CommentService {
     @Autowired
@@ -19,6 +21,7 @@ public class CommentService {
     QuestionMapper questionMapper;
     @Autowired
     QuestionExtMapper questionExtMapper;
+    @Transactional
     public void insert(Comment comment){
         if(comment.getParentId()==null||comment.getParentId()==0){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
