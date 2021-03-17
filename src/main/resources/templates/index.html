@@ -10,6 +10,16 @@
 
     <script type="application/javascript" src="js/bootstrap.min.js">
     </script>
+    <script type="text/javascript">
+        window.onload=function (ev) {
+            debugger;
+            var item = window.localStorage.getItem("errorAfter");
+            if(item=="true"){
+                window.close();
+                window.localStorage.removeItem("errorAfter")
+            }
+        }
+    </script>
     <!--    引入bootstrap的css样式和js文件-->
 </head>
 <body>

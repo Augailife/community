@@ -6,13 +6,14 @@ import com.zhao.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
 public class UserService {
     @Autowired
     UserMapper userMapper;
-
+@Transactional
     public void findByAccountId(User user){
         UserExample userExample = new UserExample();
         userExample.createCriteria()

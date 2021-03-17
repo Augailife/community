@@ -39,3 +39,19 @@ body{
     float: right;
     margin-bottom: 10px
 }
+.hr_top{
+    margin-top: 0;
+}
+.img_comment{
+    margin-left: 10px;
+    font-size: 15px;
+}
+.comment_menu{
+    color: #999;
+}
+.comment_menu .icon{
+    cursor: pointer;
+}
+.comment_menu .icon:hover{
+    color: #2aabd2;
+}
