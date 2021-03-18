@@ -1,9 +1,8 @@
 package com.zhao.community.controller;
 
-import com.zhao.community.dto.CommentDTO;
+import com.zhao.community.dto.CommentCreateDTO;
 import com.zhao.community.dto.ResultDTO;
 import com.zhao.community.exception.CustomizeErrorCode;
-import com.zhao.community.mapper.CommentMapper;
 import com.zhao.community.model.Comment;
 import com.zhao.community.model.User;
 import com.zhao.community.service.CommentService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 
 @Controller
 public class CommentController {
@@ -24,7 +22,7 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value ="/comment",method = RequestMethod.POST)
-public Object post(@RequestBody CommentDTO commentDTO,
+public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                    HttpServletRequest httpServletRequest){
         User user=(User) httpServletRequest.getSession().getAttribute("user");
         if(user==null){
@@ -32,9 +30,9 @@ public Object post(@RequestBody CommentDTO commentDTO,
         }
         Comment comment=new Comment();
         comment.setCommentator(1);
-        comment.setParentId(commentDTO.getParentId());
-        comment.setType(commentDTO.getType());
-        comment.setContent(commentDTO.getContent());
+        comment.setParentId(commentCreateDTO.getParentId());
+        comment.setType(commentCreateDTO.getType());
+        comment.setContent(commentCreateDTO.getContent());
         comment.setCommentator(user.getId());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());

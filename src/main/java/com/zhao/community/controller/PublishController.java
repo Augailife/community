@@ -76,6 +76,9 @@ public class PublishController {
                     question.setTitle(title);
                     question.setTag(tag);
                     question.setBuchong(buchong);
+                    question.setViewCount(0);
+                    question.setCommentCount(0);
+                    question.setLikeCount(0);
                     question.setGmtCreate(System.currentTimeMillis());
                     question.setGmtModified(question.getGmtCreate());
                     question.setCreator(user.getId());
