@@ -45,11 +45,16 @@
                     </div>
                     <div class="media-body">
                         <h5><span th:text="${commentDTO.user.name}"></span></h5>
-                        <div th:text="${commentDTO.content}">这是一个回复内容</div>
+                        <div th:text="${commentDTO.content}"></div>
                         <div class="comment_menu">
                         <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                        <span class="glyphicon glyphicon-comment img_comment icon"></span>
-                        <span class="pull-right" th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd')}"></span>
+<!--                            data-*相当于一个map，可以存取数据-->
+                        <span class="glyphicon glyphicon-comment img_comment icon" th:data-id="${commentDTO.id}" onclick="ercomment(this)"></span>
+
+                        <span class="pull-right" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse" th:id="${'comment-'+commentDTO.id}">
+                            二级评论
                         </div>
                     </div>
                 </div>

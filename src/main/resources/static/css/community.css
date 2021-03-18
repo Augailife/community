@@ -53,6 +53,11 @@ body{
 }
 .comment_menu .icon{
     cursor: pointer;
+
+}
+.comment_menu .active{
+    color: #2aabd2;
+
 }
 .comment_menu .icon:hover{
     color: #2aabd2;

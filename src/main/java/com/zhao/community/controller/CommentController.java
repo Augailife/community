@@ -3,9 +3,11 @@ package com.zhao.community.controller;
 import com.zhao.community.dto.CommentCreateDTO;
 import com.zhao.community.dto.ResultDTO;
 import com.zhao.community.exception.CustomizeErrorCode;
+import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.model.Comment;
 import com.zhao.community.model.User;
 import com.zhao.community.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,10 @@ public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
         User user=(User) httpServletRequest.getSession().getAttribute("user");
         if(user==null){
             return ResultDTO.errorOf(CustomizeErrorCode.LOGIN_NOT);
+        }
+        if(StringUtils.isBlank(commentCreateDTO.getContent())){
+
+            return ResultDTO.errorOf(CustomizeErrorCode.COMMENT_EXSIST);
         }
         Comment comment=new Comment();
         comment.setCommentator(1);

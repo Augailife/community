@@ -1,3 +1,6 @@
+/**
+ * 提交回复
+ */
 function post() {
     var questionId = $("#question_id").val();
     var comment = $("#quesion_comment").val();
@@ -8,7 +11,7 @@ function post() {
         contentType:"application/json",
         success:function (data) {
             if(data.code==200){
-                $("#comment_hidden").hide();
+               window.location.reload();
             }else{
                 if(data.code==2003) {
                     var b = confirm(data.message);
@@ -20,6 +23,7 @@ function post() {
                         alert(data.message);
                     }
                 }
+                alert(data.message);
             }
         },
         dataType:"json",
@@ -29,6 +33,21 @@ function post() {
             "type":0
         })
     });
-
-
 }
+    /**
+     * 打开二级回复
+     */
+function ercomment(e){
+    var id = e.getAttribute("data-id");
+    var comment=$("#comment-"+id);
+    var attribute = e.getAttribute("data-collapse");
+    if(attribute){
+        comment.removeClass("in");
+        e.removeAttribute("data-collapse")
+    }else{
+        comment.addClass("in");
+        //标记二级评论展开状态
+        e.setAttribute("data-collapse","in");
+    }
+    }
+
