@@ -66,3 +66,16 @@ body{
     margin-bottom: 15px;
     border-bottom:1px solid #999999;
 }
+.css_ercomments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eeeeee;
+    padding-top: 15px;
+}
+.erping{
+    margin-top: 15px;
+}
+.btn_erping{
+    margin-top: 8px;
+    float: right;
+}

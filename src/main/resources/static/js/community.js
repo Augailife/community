@@ -4,14 +4,16 @@
 function post() {
     var questionId = $("#question_id").val();
     var comment = $("#quesion_comment").val();
-    console.log(comment);
+    comment2target(questionId,0,comment);
+}
+function comment2target(parentId,type,content) {
     $.ajax({
         type:"POST",
         url:"/comment",
         contentType:"application/json",
         success:function (data) {
             if(data.code==200){
-               window.location.reload();
+                window.location.reload();
             }else{
                 if(data.code==2003) {
                     var b = confirm(data.message);
@@ -28,9 +30,9 @@ function post() {
         },
         dataType:"json",
         data:JSON.stringify({
-            "parentId":questionId,
-            "content":comment,
-            "type":0
+            "parentId":parentId,
+            "content":content,
+            "type":type
         })
     });
 }
@@ -42,12 +44,20 @@ function ercomment(e){
     var comment=$("#comment-"+id);
     var attribute = e.getAttribute("data-collapse");
     if(attribute){
+        //取消展开状态
         comment.removeClass("in");
-        e.removeAttribute("data-collapse")
+        //移除储存的标记
+        e.removeAttribute("data-collapse");
+        //取消蓝色高亮
+        e.classList.remove("active");
+
     }else{
+        //设置展开状态
         comment.addClass("in");
         //标记二级评论展开状态
         e.setAttribute("data-collapse","in");
+        //设置蓝色高亮
+        e.classList.add("active");
     }
     }
 

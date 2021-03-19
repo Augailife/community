@@ -2,6 +2,7 @@ package com.zhao.community.controller;
 
 import com.zhao.community.dto.CommentDTO;
 import com.zhao.community.dto.QuestionDTO;
+import com.zhao.community.enums.CommentTypeEnum;
 import com.zhao.community.service.CommentService;
 import com.zhao.community.service.QuestionService;
 import com.zhao.community.service.UserService;
@@ -27,7 +28,7 @@ public class QuestionController {
             Model model
     ){
         QuestionDTO questionDTO=questionService.getById(id);
-        List<CommentDTO> commentDTOS=commentService.list(id);
+        List<CommentDTO> commentDTOS=commentService.list(id, CommentTypeEnum.QUESTION);
         questionService.calView(id);
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("commentDTOs",commentDTOS);
