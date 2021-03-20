@@ -1,14 +1,10 @@
 package com.zhao.community.service;
 
-import com.sun.org.apache.xml.internal.security.utils.JavaUtils;
 import com.zhao.community.dto.CommentDTO;
 import com.zhao.community.enums.CommentTypeEnum;
 import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.exception.CustomizeException;
-import com.zhao.community.mapper.CommentMapper;
-import com.zhao.community.mapper.QuestionExtMapper;
-import com.zhao.community.mapper.QuestionMapper;
-import com.zhao.community.mapper.UserMapper;
+import com.zhao.community.mapper.*;
 import com.zhao.community.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +27,8 @@ public class CommentService {
     QuestionExtMapper questionExtMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    CommentExtMapper commentExtMapper;
     @Transactional
     public void insert(Comment comment){
         if(comment.getParentId()==null||comment.getParentId()==0){
@@ -41,10 +39,18 @@ public class CommentService {
         }
         if(comment.getType()==CommentTypeEnum.COMMENT.getType()){
             //回复评论
-            if(commentMapper.selectByPrimaryKey(comment.getId())==null){
+            CommentExample commentExample=new CommentExample();
+            commentExample.createCriteria()
+                    .andParentIdEqualTo(comment.getParentId());
+            List<Comment> comments = commentMapper.selectByExample(commentExample);
+            if(comments==null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOTFOUND);
             }else{
+
                 commentMapper.insert(comment);
+                Comment comment1 = commentMapper.selectByPrimaryKey(comment.getParentId().longValue());
+                comment1.setCommentCount(1);
+                commentExtMapper.incErComment(comment1);
             }
         }else{
             //回复问题

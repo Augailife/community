@@ -5,7 +5,6 @@ import com.zhao.community.dto.CommentDTO;
 import com.zhao.community.dto.ResultDTO;
 import com.zhao.community.enums.CommentTypeEnum;
 import com.zhao.community.exception.CustomizeErrorCode;
-import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.model.Comment;
 import com.zhao.community.model.User;
 import com.zhao.community.service.CommentService;
