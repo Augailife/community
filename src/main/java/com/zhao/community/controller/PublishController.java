@@ -1,5 +1,6 @@
 package com.zhao.community.controller;
 
+import com.zhao.community.cache.TagCache;
 import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.mapper.QuestionMapper;
@@ -30,10 +31,12 @@ public class PublishController {
         model.addAttribute("buchong",question.getBuchong());
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
+        model.addAttribute("tags", TagCache.getTags());
         return "publish";
     }
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+        model.addAttribute("tags", TagCache.getTags());
 
         return "publish";
     }
@@ -49,6 +52,7 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("buchong",buchong);
         model.addAttribute("tag",tag);
+        model.addAttribute("tags", TagCache.getTags());
         if(title==null||title==""){
             model.addAttribute("error","标题不能为空");
             return "publish";

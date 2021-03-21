@@ -45,6 +45,24 @@ function comment(e) {
     var content=$("#input-"+id).val();
     comment2target(id,1,content);
 }
+
+/**
+ * 设置标签
+ */
+function showSelectTag() {
+    $("#select-tag").show();
+}
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag").val();
+    if (previous.indexOf(value) == -1) {
+        if (previous) {
+            $("#tag").val(previous + ',' + value);
+        } else {
+            $("#tag").val(value);
+        }
+    }
+}
 /**
  * 打开二级回复
      */
