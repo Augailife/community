@@ -24,4 +24,7 @@
     comment_count =comment_count+#{commentCount,jdbcType=INTEGER}
     where id=#{id}
   </update>
+  <select id="regexpTag" parameterType="com.zhao.community.model.Question" resultMap="BaseResultMap">
+  select * from question where id!=#{id} and tag regexp #{tag}
+</select>
 </mapper>

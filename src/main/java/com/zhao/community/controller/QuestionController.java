@@ -29,9 +29,12 @@ public class QuestionController {
     ){
         QuestionDTO questionDTO=questionService.getById(id);
         List<CommentDTO> commentDTOS=commentService.list(id, CommentTypeEnum.QUESTION);
+        List<QuestionDTO> questionDTOS = questionService.selectTag(questionDTO);
+
         questionService.calView(id);
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("commentDTOs",commentDTOS);
+        model.addAttribute("relatedQuestions", questionDTOS);
         return "question";
     }
 }

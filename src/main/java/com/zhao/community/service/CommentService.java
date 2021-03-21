@@ -77,7 +77,7 @@ public class CommentService {
         }
         Set<Integer> commentators = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
 
-        List<Integer> userIds=new ArrayList<>();
+        List<Integer> userIds= new ArrayList<>();
         userIds.addAll(commentators);
         UserExample userExample = new UserExample();
         userExample.createCriteria()

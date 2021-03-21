@@ -15,4 +15,5 @@ import java.util.List;
 public interface QuestionExtMapper {
     int incView(Question record);
     int incComment(Question commentCount);
+    List<Question> regexpTag(Question question);
 }
