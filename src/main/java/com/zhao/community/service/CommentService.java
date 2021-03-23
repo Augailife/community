@@ -2,6 +2,8 @@ package com.zhao.community.service;
 
 import com.zhao.community.dto.CommentDTO;
 import com.zhao.community.enums.CommentTypeEnum;
+import com.zhao.community.enums.NotifictionEnum;
+import com.zhao.community.enums.NotifictionStatusEnum;
 import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.mapper.*;
@@ -29,14 +31,17 @@ public class CommentService {
     UserMapper userMapper;
     @Autowired
     CommentExtMapper commentExtMapper;
+    @Autowired
+    NotifictionMapper notifictionMapper;
     @Transactional
-    public void insert(Comment comment){
+    public void insert(Comment comment, User commentator){
         if(comment.getParentId()==null||comment.getParentId()==0){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         if(comment.getType()==null|| !CommentTypeEnum.isExist(comment.getType())){
             throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         }
+        Comment comment1 = commentMapper.selectByPrimaryKey(comment.getParentId().longValue());
         if(comment.getType()==CommentTypeEnum.COMMENT.getType()){
             //回复评论
             CommentExample commentExample=new CommentExample();
@@ -48,9 +53,10 @@ public class CommentService {
             }else{
 
                 commentMapper.insert(comment);
-                Comment comment1 = commentMapper.selectByPrimaryKey(comment.getParentId().longValue());
                 comment1.setCommentCount(1);
                 commentExtMapper.incErComment(comment1);
+                Notifiction notifiction = getNotifiction(comment, comment1.getCommentator(), commentator.getName(),comment.getContent(),NotifictionEnum.NOTICE_PINGLUN);
+                notifictionMapper.insert(notifiction);
             }
         }else{
             //回复问题
@@ -61,8 +67,23 @@ public class CommentService {
                 commentMapper.insert(comment);
                 question.setCommentCount(1);
                 questionExtMapper.incComment(question);
+                Notifiction notifiction = getNotifiction(comment, comment1.getCommentator(),commentator.getName(),question.getTitle(),NotifictionEnum.NOTICE_HUIFU);
+                notifictionMapper.insert(notifiction);
             }
+
         }
+    }
+    public Notifiction getNotifiction(Comment comment,Integer reciever,String notifiername, String outertitle,NotifictionEnum notifictionEnum){
+        Notifiction notifiction=new Notifiction();
+        notifiction.setGmtCreate(System.currentTimeMillis());
+        notifiction.setType(notifictionEnum.getType());
+        notifiction.setNotifier(comment.getParentId().longValue());
+        notifiction.setOuterid(comment.getCommentator().longValue());
+        notifiction.setStatus(NotifictionStatusEnum.NOREAD.getStatus());
+        notifiction.setNotifiername(notifiername);
+        notifiction.setOutertitle(outertitle);
+        notifiction.setReciever(reciever.longValue());
+        return notifiction;
     }
 
     public List<CommentDTO> list(Integer id,CommentTypeEnum commentTypeEnum) {
@@ -70,8 +91,8 @@ public class CommentService {
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
                 .andTypeEqualTo(commentTypeEnum.getType());
-        commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
+        commentExample.setOrderByClause("gmt_create desc");
         if(comments.size()==0){
             return new ArrayList();
         }

@@ -40,6 +40,9 @@
             <property name="useActualColumnNames" value="false"/>
         </table>
         <table tableName="comment"  domainObjectName="Comment" >
+        <property name="useActualColumnNames" value="false"/>
+    </table>
+        <table tableName="notifiction"  domainObjectName="Notifiction" >
             <property name="useActualColumnNames" value="false"/>
         </table>
     </context>

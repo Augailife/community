@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-public class PageDTO {
+public class PageDTO<T> {
     private Integer page;
-    private List<QuestionDTO> questionDTOS;
+    private List<T> data;
     private boolean hasfirst;
     private boolean haslast;
     private boolean hasnext;

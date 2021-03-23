@@ -1,0 +1,135 @@
+body{
+    background-color:#efefef;
+}
+
+.main{
+    margin: 30px;
+    background-color: #f8f8f8;
+
+}
+
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+
+.media-object{
+    width: 38px;
+    height: 38px;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.profile.section{
+    margin-top: 15px;
+}
+.community-menu{
+    color: #999;
+    font-size:13px ;
+    margin-bottom: 15px;
+}
+.community-m{
+    color: #999;
+    font-size:13px ;
+    margin-bottom: 15px;
+    display: block;
+}
+.error{
+    margin: 50px;
+}
+.comment{
+    margin: 10px 0;
+}
+.btn_comment{
+    float: right;
+    margin-bottom: 10px
+}
+.hr_top{
+    margin-top: 0;
+}
+.img_comment{
+    margin-left: 10px;
+    font-size: 15px;
+}
+.comment_menu{
+    color: #999;
+}
+.comment_menu .icon{
+    cursor: pointer;
+
+}
+.comment_menu .active{
+    color: #2aabd2;
+
+}
+.comment_menu .icon:hover{
+    color: #2aabd2;
+}
+#comment_section{
+    margin-bottom: 15px;
+    border-bottom:1px solid #999999;
+}
+.css_ercomments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eeeeee;
+    padding-top: 15px;
+}
+.erping{
+    margin-top: 15px;
+}
+.btn_erping{
+    margin-top: 8px;
+    float: right;
+}
+.sub-comments {
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+.comment {
+    margin: 10px 0;
+}
+
+.btn-comment {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.comments {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.pull-right{
+    margin-top: 10px;
+}
+.question_tag{
+    margin-right: 5px;
+}
+/*.question-related{*/
+/*    line-height: 20px;*/
+/*    font-size: 13px;*/
+/*    margin-left: 0;*/
+/*    list-style: none;*/
+/*    padding-left: 0;*/
+/*    margin-top: 3px;*/
+/*}*/
+.hello_world{
+    width: 100%;
+}
+.publish-tag-tab {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.publish-tag-tab .label-info {
+    white-space: normal;
+    margin: 5px 5px;
+    display: inline-block;
+}

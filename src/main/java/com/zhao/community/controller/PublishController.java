@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -37,7 +38,6 @@ public class PublishController {
     @GetMapping("/publish")
     public String publish(Model model){
         model.addAttribute("tags", TagCache.getTags());
-
         return "publish";
     }
     @PostMapping("/publish")
@@ -63,6 +63,11 @@ public class PublishController {
         }
         if(tag==null||tag==""){
             model.addAttribute("error","标签不能为空");
+            return "publish";
+        }
+        List<String> vaild = TagCache.isVaild(tag);
+        if(vaild!=null){
+            model.addAttribute("error","标签不合规则"+vaild);
             return "publish";
         }
         User user=(User)servletRequest.getSession().getAttribute("user");

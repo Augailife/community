@@ -51,7 +51,7 @@ public class QuestionService {
             questionDTO.setUser(user);//写javabean对象时，尽量往大里写。
             questionDTOS.add(questionDTO);
         }
-        pageDTO.setQuestionDTOS(questionDTOS);
+        pageDTO.setData(questionDTOS);
 
         return pageDTO;
 
@@ -74,7 +74,7 @@ public class QuestionService {
             questionDTO.setUser(user);//写javabean对象时，尽量往大里写。
             questionDTOS.add(questionDTO);
         }
-        pageDTO.setQuestionDTOS(questionDTOS);
+        pageDTO.setData(questionDTOS);
 
         return pageDTO;
     }

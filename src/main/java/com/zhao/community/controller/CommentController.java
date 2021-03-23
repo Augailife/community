@@ -41,7 +41,7 @@ public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
         comment.setCommentator(user.getId());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        commentServicer.insert(comment);
+        commentServicer.insert(comment,user);
 //        HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
 //        objectObjectHashMap.put("message", "成功");
         return ResultDTO.okOf();

@@ -37,7 +37,7 @@
 
             <hr/>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <a class="community-menu" th:href="@{'/publish/'+${questionDTO.id}}" th:if="${session.user!=null&&session.user.id==questionDTO.creator}">
+            <a class="community-m" th:href="@{'/publish/'+${questionDTO.id}}" th:if="${session.user!=null&&session.user.id==questionDTO.creator}">
                 <span class="glyphicon glyphicon-pencil"></span>编辑</a>
             </div>
 

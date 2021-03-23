@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TagCache {
  @Autowired
@@ -41,4 +42,13 @@ public class TagCache {
 
      return tagDTOS;
  }
+  public static List<String> isVaild(String tags){
+      String[] split = tags.split(",");
+      List<String> webTags = Arrays.stream(split).collect(Collectors.toList());
+      List<TagDTO> serTags = getTags();
+      List<String> StrTags = serTags.stream().flatMap(tagDTO1 -> tagDTO1.getTags().stream()).collect(Collectors.toList());
+      List<String> invalidList = webTags.stream().filter(webTag -> !StrTags.contains(webTag)).collect(Collectors.toList());
+      return invalidList;
+
+  }
 }
