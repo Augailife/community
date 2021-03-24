@@ -2,7 +2,7 @@ package com.zhao.community.enums;
 
 public enum NotifictionEnum {
     NOTICE_PINGLUN(1,"评论了"),
-    NOTICE_HUIFU(1,"回复了")
+    NOTICE_HUIFU(2,"回复了")
     ;
     int type;
     String notice;

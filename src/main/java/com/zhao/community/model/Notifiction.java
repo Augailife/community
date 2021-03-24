@@ -1,5 +1,7 @@
 package com.zhao.community.model;
 
+import com.zhao.community.dto.NotificationDTO;
+
 public class Notifiction {
     /**
      *
@@ -297,4 +299,6 @@ public class Notifiction {
     public void setOutertitle(String outertitle) {
         this.outertitle = outertitle == null ? null : outertitle.trim();
     }
+
+
 }

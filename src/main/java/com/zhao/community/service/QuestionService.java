@@ -65,7 +65,10 @@ public class QuestionService {
         pageDTO.fenYe(page,size,count);
         Integer startpage=(page-1)*size;
 
-        List<Question> questions=questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(startpage,size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questions=questionMapper.selectByExampleWithRowbounds(example,new RowBounds(startpage,size));
+
 
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());

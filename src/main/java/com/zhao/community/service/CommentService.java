@@ -55,7 +55,7 @@ public class CommentService {
                 commentMapper.insert(comment);
                 comment1.setCommentCount(1);
                 commentExtMapper.incErComment(comment1);
-                Notifiction notifiction = getNotifiction(comment, comment1.getCommentator(), commentator.getName(),comment.getContent(),NotifictionEnum.NOTICE_PINGLUN);
+                Notifiction notifiction = getNotifiction(comment,comment1.getParentId().longValue(), comment1.getCommentator(), commentator.getName(),comment1.getContent(),NotifictionEnum.NOTICE_PINGLUN);
                 notifictionMapper.insert(notifiction);
             }
         }else{
@@ -67,17 +67,17 @@ public class CommentService {
                 commentMapper.insert(comment);
                 question.setCommentCount(1);
                 questionExtMapper.incComment(question);
-                Notifiction notifiction = getNotifiction(comment, comment1.getCommentator(),commentator.getName(),question.getTitle(),NotifictionEnum.NOTICE_HUIFU);
+                Notifiction notifiction = getNotifiction(comment, question.getId().longValue(),question.getCreator(),commentator.getName(),question.getTitle(),NotifictionEnum.NOTICE_HUIFU);
                 notifictionMapper.insert(notifiction);
             }
 
         }
     }
-    public Notifiction getNotifiction(Comment comment,Integer reciever,String notifiername, String outertitle,NotifictionEnum notifictionEnum){
+    public Notifiction getNotifiction(Comment comment,Long notifier,Integer reciever,String notifiername, String outertitle,NotifictionEnum notifictionEnum){
         Notifiction notifiction=new Notifiction();
         notifiction.setGmtCreate(System.currentTimeMillis());
         notifiction.setType(notifictionEnum.getType());
-        notifiction.setNotifier(comment.getParentId().longValue());
+        notifiction.setNotifier(notifier);
         notifiction.setOuterid(comment.getCommentator().longValue());
         notifiction.setStatus(NotifictionStatusEnum.NOREAD.getStatus());
         notifiction.setNotifiername(notifiername);

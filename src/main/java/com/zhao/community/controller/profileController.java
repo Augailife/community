@@ -44,6 +44,8 @@ public class profileController {
         }else if("replies".equals(action)){
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","我的回复");
+            Long unreadCount=notifictionService.getUnreadCount(user.getId());
+            model.addAttribute("unreadCount",unreadCount);
             PageDTO pageDTO= notifictionService.List(page, size, user.getId());
             model.addAttribute("PageYe",pageDTO);
         }

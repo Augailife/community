@@ -39,4 +39,21 @@ public class NotifictionService {
 
 
     }
+
+    public Long getUnreadCount(Integer id) {
+        NotifictionExample example = new NotifictionExample();
+        example.createCriteria()
+                .andRecieverEqualTo(id.longValue())
+                .andStatusEqualTo(2);
+        return notifictionMapper.countByExample(example);
+    }
+
+    public NotificationDTO read(Notifiction notifiction) {
+        notifiction.setStatus(1);
+        notifictionMapper.updateByPrimaryKey(notifiction);
+        NotificationDTO notificationDTO = new NotificationDTO();
+        BeanUtils.copyProperties(notifiction,notificationDTO);
+        notificationDTO.setType(NotifictionEnum.typeToGetName(notifiction.getType()));
+        return notificationDTO;
+    }
 }
