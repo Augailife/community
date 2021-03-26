@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NotifictionService {
@@ -20,7 +21,7 @@ public class NotifictionService {
     NotifictionMapper notifictionMapper;
     public PageDTO List(Integer page, Integer size, Integer id) {
         PageDTO pageDTO=new PageDTO();
-        List<NotificationDTO> notificationDTOS=new ArrayList<>();
+
         NotifictionExample notifictionExample = new NotifictionExample();
         Integer count =(int) notifictionMapper.countByExample(notifictionExample);
         pageDTO.fenYe(page,size, count);
@@ -28,12 +29,13 @@ public class NotifictionService {
         NotifictionExample  notifictionExample1 = new NotifictionExample();
         notifictionExample1.setOrderByClause("gmt_create desc");
         List<Notifiction> notifictions=notifictionMapper.selectByExampleWithRowbounds(notifictionExample1,new RowBounds(startpage,size));
-        for (Notifiction notifiction : notifictions) {
-            NotificationDTO notificationDTO=new NotificationDTO();
+        List<NotificationDTO> notificationDTOS = notifictions.stream().map(notifiction -> {
+            NotificationDTO notificationDTO = new NotificationDTO();
             BeanUtils.copyProperties(notifiction, notificationDTO);
             notificationDTO.setType(NotifictionEnum.typeToGetName(notifiction.getType()));
-            notificationDTOS.add(notificationDTO);
-        }
+            return notificationDTO;
+        }).collect(Collectors.toList());
+
         pageDTO.setData(notificationDTOS);
         return pageDTO;
 

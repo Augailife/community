@@ -38,6 +38,8 @@ public class profileController {
         if("questions".equals(action)){
             model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的提问");
+            Long unreadCount=notifictionService.getUnreadCount(user.getId());
+            model.addAttribute("unreadCount",unreadCount);
             PageDTO list = questionService.list(user.getId(),page,size);
             model.addAttribute("PageYe",list);
 

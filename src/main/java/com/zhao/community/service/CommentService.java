@@ -51,7 +51,7 @@ public class CommentService {
             if(comments==null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOTFOUND);
             }else{
-
+//            回复评论
                 commentMapper.insert(comment);
                 comment1.setCommentCount(1);
                 commentExtMapper.incErComment(comment1);
@@ -73,7 +73,8 @@ public class CommentService {
 
         }
     }
-    public Notifiction getNotifiction(Comment comment,Long notifier,Integer reciever,String notifiername, String outertitle,NotifictionEnum notifictionEnum){
+    public Notifiction getNotifiction(Comment comment,Long notifier,Integer reciever,String notifiername,
+                                      String outertitle,NotifictionEnum notifictionEnum){
         Notifiction notifiction=new Notifiction();
         notifiction.setGmtCreate(System.currentTimeMillis());
         notifiction.setType(notifictionEnum.getType());

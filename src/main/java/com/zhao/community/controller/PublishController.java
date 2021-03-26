@@ -66,7 +66,7 @@ public class PublishController {
             return "publish";
         }
         List<String> vaild = TagCache.isVaild(tag);
-        if(vaild!=null){
+        if(vaild!=null&&vaild.size()!=0){
             model.addAttribute("error","标签不合规则"+vaild);
             return "publish";
         }
