@@ -100,6 +100,13 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
         </dependency>
+<!--        uncloud-->
+        <dependency>
+            <groupId>cn.ucloud</groupId>
+            <artifactId>ucloud-sdk-java-common</artifactId>
+            <version>0.8.4.4-release</version>
+        </dependency>
+
     </dependencies>
 
     <build>

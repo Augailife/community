@@ -55,8 +55,8 @@ public class CommentService {
                 commentMapper.insert(comment);
                 comment1.setCommentCount(1);
                 commentExtMapper.incErComment(comment1);
-                Notifiction notifiction = getNotifiction(comment,comment1.getParentId().longValue(), comment1.getCommentator(), commentator.getName(),comment1.getContent(),NotifictionEnum.NOTICE_PINGLUN);
-                notifictionMapper.insert(notifiction);
+                CreateNotifiction(comment,comment1.getParentId().longValue(), comment1.getCommentator(), commentator.getName(),comment1.getContent(),NotifictionEnum.NOTICE_PINGLUN);
+
             }
         }else{
             //回复问题
@@ -67,14 +67,17 @@ public class CommentService {
                 commentMapper.insert(comment);
                 question.setCommentCount(1);
                 questionExtMapper.incComment(question);
-                Notifiction notifiction = getNotifiction(comment, question.getId().longValue(),question.getCreator(),commentator.getName(),question.getTitle(),NotifictionEnum.NOTICE_HUIFU);
-                notifictionMapper.insert(notifiction);
+                CreateNotifiction(comment, question.getId().longValue(),question.getCreator(),commentator.getName(),question.getTitle(),NotifictionEnum.NOTICE_HUIFU);
+
             }
 
         }
     }
-    public Notifiction getNotifiction(Comment comment,Long notifier,Integer reciever,String notifiername,
+    public void CreateNotifiction(Comment comment,Long notifier,Integer reciever,String notifiername,
                                       String outertitle,NotifictionEnum notifictionEnum){
+        if(comment.getCommentator()==reciever){
+            return;
+        }
         Notifiction notifiction=new Notifiction();
         notifiction.setGmtCreate(System.currentTimeMillis());
         notifiction.setType(notifictionEnum.getType());
@@ -84,7 +87,7 @@ public class CommentService {
         notifiction.setNotifiername(notifiername);
         notifiction.setOutertitle(outertitle);
         notifiction.setReciever(reciever.longValue());
-        return notifiction;
+        notifictionMapper.insert(notifiction);
     }
 
     public List<CommentDTO> list(Integer id,CommentTypeEnum commentTypeEnum) {
