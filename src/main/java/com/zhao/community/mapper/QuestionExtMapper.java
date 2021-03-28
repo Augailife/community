@@ -1,5 +1,6 @@
 package com.zhao.community.mapper;
 
+import com.zhao.community.dto.QuestionQueryDTO;
 import com.zhao.community.model.Comment;
 import com.zhao.community.model.Question;
 import com.zhao.community.model.QuestionExample;
@@ -16,4 +17,6 @@ public interface QuestionExtMapper {
     int incView(Question record);
     int incComment(Question commentCount);
     List<Question> regexpTag(Question question);
+    Integer searchCount(QuestionQueryDTO queryDTO);
+    List<Question>  searchQuestion(QuestionQueryDTO queryDTO);
 }

@@ -18,11 +18,19 @@ public class IndexController {
     public String index(HttpServletRequest servletRequest,
                         Model model,
                         @RequestParam(name = "page",defaultValue = "1") Integer page,
-                        @RequestParam(name = "size",defaultValue = "5") Integer size
+                        @RequestParam(name = "size",defaultValue = "5") Integer size,
+                        @RequestParam(name = "search",required = false) String search
         ){
 
-        PageDTO list = questionService.list(page,size);
-        model.addAttribute("pageYe",list);
+
+        if(search!=null&&search!="") {
+            PageDTO searchList = questionService.list(search, page, size);
+            model.addAttribute("pageYe",searchList);
+            model.addAttribute("search", search);
+        }else {
+            PageDTO list = questionService.list(page,size);
+            model.addAttribute("pageYe",list);
+        }
         return "index";
         }
         }

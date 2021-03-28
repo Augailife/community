@@ -27,4 +27,21 @@
   <select id="regexpTag" parameterType="com.zhao.community.model.Question" resultMap="BaseResultMap">
   select * from question where id!=#{id} and tag regexp #{tag}
 </select>
+  <select id="searchCount" parameterType="com.zhao.community.dto.QuestionQueryDTO" resultType="java.lang.Integer">
+  select count(*) from question
+  <where>
+  <if test="search!=null">
+    and title regexp #{search}
+  </if>
+  </where>
+  </select>
+  <select id="searchQuestion" parameterType="com.zhao.community.dto.QuestionQueryDTO" resultMap="BaseResultMap">
+    select * from question
+    <where>
+      <if test="search!=null">
+        and title regexp #{search}
+      </if>
+    </where>
+    order by gmt_create desc limit #{startPage},#{size}
+</select>
 </mapper>
