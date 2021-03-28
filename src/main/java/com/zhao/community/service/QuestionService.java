@@ -2,6 +2,7 @@ package com.zhao.community.service;
 
 import com.zhao.community.dto.PageDTO;
 import com.zhao.community.dto.QuestionDTO;
+import com.zhao.community.dto.QuestionQueryDTO;
 import com.zhao.community.exception.CustomizeErrorCode;
 import com.zhao.community.exception.CustomizeException;
 import com.zhao.community.mapper.QuestionExtMapper;
@@ -31,18 +32,49 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public PageDTO list(Integer page,Integer size){
+    public PageDTO list(String search, Integer page, Integer size){
+        PageDTO pageDTO=new PageDTO();
+        if(search != null||search !=""){
+            String[] s = search.split(" ");
+            String title = Arrays.stream(s).collect(Collectors.joining("|"));
+            QuestionQueryDTO queryDTO=new QuestionQueryDTO();
+            queryDTO.setSearch(title);
+            Integer count=questionExtMapper.searchCount(queryDTO);
+            pageDTO.fenYe(page,size,count);
+            Integer startpage=(page-1)*size;
+            QuestionExample questionExample1 = new QuestionExample();
+            questionExample1.setOrderByClause("gmt_create desc");
+            queryDTO.setStartPage(startpage);
+            queryDTO.setSize(size);
+            List<QuestionDTO> questionDTOS=new ArrayList<>();
+            List<Question> questions = questionExtMapper.searchQuestion(queryDTO);
+            for (Question question : questions) {
+                User user = userMapper.selectByPrimaryKey(question.getCreator());
+                QuestionDTO questionDTO=new QuestionDTO();
+                BeanUtils.copyProperties(question, questionDTO);//使用BeanUtils工具将question注入questionDTO中；
+                questionDTO.setUser(user);//写javabean对象时，尽量往大里写。
+                questionDTOS.add(questionDTO);
+            }
+            pageDTO.setData(questionDTOS);
+
+            return pageDTO;
+
+        }else {
+            return  null;
+        }
+
+
+    }
+    public PageDTO list(Integer page, Integer size) {
         PageDTO pageDTO=new PageDTO();
         List<QuestionDTO> questionDTOS=new ArrayList<>();
         QuestionExample questionExample = new QuestionExample();
-
-        Integer count =(int) questionMapper.countByExample(questionExample);
+        Integer count = (int)questionMapper.countByExample(questionExample);
         pageDTO.fenYe(page,size,count);
-
         Integer startpage=(page-1)*size;
-        QuestionExample questionExample1 = new QuestionExample();
-        questionExample1.setOrderByClause("gmt_create desc");
-        List<Question> questions=questionMapper.selectByExampleWithRowbounds(questionExample1,new RowBounds(startpage,size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questions=questionMapper.selectByExampleWithRowbounds(example,new RowBounds(startpage,size));
 
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -52,9 +84,7 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         pageDTO.setData(questionDTOS);
-
         return pageDTO;
-
     }
 
     public PageDTO list(Integer userId, Integer page, Integer size) {

@@ -4,6 +4,7 @@ package com.zhao.community.interceptors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -14,7 +15,6 @@ SessionIntersepter sessionIntersepter;//被Spring容器接管后就不能再实�
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(sessionIntersepter).addPathPatterns("/**");
-
     }
 
 }
