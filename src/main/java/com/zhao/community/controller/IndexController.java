@@ -31,6 +31,6 @@ public class IndexController {
             PageDTO list = questionService.list(page,size);
             model.addAttribute("pageYe",list);
         }
-        return "index";
+        return "indexs";
         }
         }
