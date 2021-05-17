@@ -72,9 +72,17 @@ public class QuestionService {
         Integer count = (int)questionMapper.countByExample(questionExample);
         pageDTO.fenYe(page,size,count);
         Integer startpage=(page-1)*size;
+<<<<<<< HEAD
         QuestionExample example = new QuestionExample();
         example.setOrderByClause("gmt_create desc");
         List<Question> questions=questionMapper.selectByExampleWithRowbounds(example,new RowBounds(startpage,size));
+=======
+
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questions=questionMapper.selectByExampleWithRowbounds(example,new RowBounds(startpage,size));
+
+>>>>>>> fd6894f54cbde842bdf49e1545469428c944fcf2
 
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
